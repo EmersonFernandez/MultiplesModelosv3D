@@ -1,0 +1,218 @@
+/* variables globales */
+:root {
+    --color-text-gentle: rgba(255, 255, 255, 0.696);
+    --color-text: #ffffff;
+    --color-active:#007bff;
+    --backgraound-body: #283246;
+}
+/* Estilos del body */
+body {
+    background: var(--backgraound-body);
+    height: 100vh;
+}
+
+/* Estilosd el Navbar o Header */
+.navbar-nav {
+    justify-content: center;
+    align-items: center;
+}
+
+#navbarSupportedContent ul li a {
+    color: var(--color-text-gentle) !important;
+}
+
+#navbarSupportedContent ul li a:hover {
+    color: var(--color-text) !important;
+}
+
+.contact-button {
+    margin-right: 15px;
+}
+
+.contact-button .btn {
+    background-color: var(--color-active);
+    /* Cambia este color al que desees */
+    color: var(--color-text);
+    border-radius: 20px;
+    /* Bordes redondeados */
+}
+
+#contactanos button {
+    border: 1px solid var(--color-text);
+    color: var(--color-text-gentle) !important;
+    border-radius: 5px;
+}
+
+#contactanos button:hover {
+    color: var(--color-text) !important;
+}
+
+.social-icons .nav-link {
+    font-size: 1.2rem;
+    /* Ajusta el tamaño de los iconos según sea necesario */
+    color: var(--color-text);
+    /* Cambia este color al que desees */
+}
+
+.social-icons .nav-link:hover {
+    color: var(--color-active);
+    /* Cambia el color al pasar el cursor */
+}
+
+
+/* Estilos del Body */
+#box {
+    width: 100%;
+    height: 80.4vh;
+}
+
+.standard {
+    margin-top: 1rem;
+    height: 78vh;
+    padding: 0;
+
+}
+
+#btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 75vh;
+}
+
+#frame p {
+    text-align: center;
+    color: #ADD8E6;
+    font-weight: bolder;
+    margin: 4px;
+}
+
+#div_iframe {
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
+    height: 70vh;
+    border-radius: 5px;
+}
+
+.img_flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iframe {
+    width: 100%;
+    height: 100%;
+}
+
+#btn button {
+    border: 1px solid var(--color-text);
+    width: 90%;
+    color: var(--color-text);
+}
+
+#btn button:hover {
+    color: var(--color-active);
+}
+
+.active{
+    color: var(--color-active) !important;
+    font-weight: bolder;
+}
+
+/* Estilos de los detalles de los frames */
+
+#detalles #div_details {
+    margin: 0 10px;
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
+    height: 75vh;
+    border-radius: 5px;
+    display:  flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /* background: #000; */
+}
+/* Estilos de los videos */
+.video{
+    width: 220px;
+    height: auto;
+    border-radius: 7px;
+}
+
+/* Estilos del footer */
+.hr {
+    margin: 6px 0 0 0 ;
+    width: 90%;
+    height: 1px;
+    background: var(--color-text);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px 0 0 0;
+    text-align: center;
+    color: var(--color-text);
+}
+
+
+/* Medias query de la paginas */
+
+@media screen and (max-width: 767px){
+    footer {
+        position: absolute;
+        bottom: -160vh;
+    }
+}
+
+
+
+
+/* Sppiner */
+
+
+#loader-container {
+    /* position: absolute; */
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    background: transparent;
+    z-index: 9999;
+}
+
+#loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+#loading-text {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    /* color: black !important; */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
