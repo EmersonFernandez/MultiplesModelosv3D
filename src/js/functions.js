@@ -177,7 +177,7 @@ export const modelos3DLoader = (nameModel, py, event) => {
                 // Cargar modelo FBX
                 const loader = new FBXLoader(loadingManager);
                 loader.load(`./assets/model/${nameModel}.fbx`, function (object) {
-                    console.log(object);
+                    // console.log(object);
                     object.children.forEach((el) => {
                         if (el.isMesh && el.material && el.material.map) {
                             el.material.color.set(3, 3, 3); // Cambia el color a blanco
