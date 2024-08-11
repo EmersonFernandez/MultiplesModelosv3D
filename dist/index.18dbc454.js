@@ -5795,63 +5795,67 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "scene", ()=>scene);
 parcelHelpers.export(exports, "textureLoader", ()=>textureLoader);
 parcelHelpers.export(exports, "renderer", ()=>renderer);
-parcelHelpers.export(exports, "controls", ()=>controls);
-parcelHelpers.export(exports, "raycaster", ()=>raycaster);
-parcelHelpers.export(exports, "mouse", ()=>mouse);
 parcelHelpers.export(exports, "iframesOnClick", ()=>iframesOnClick);
 parcelHelpers.export(exports, "loadedModel", ()=>loadedModel);
 parcelHelpers.export(exports, "modelos3DLoader", ()=>modelos3DLoader);
+// Función para la animación
 parcelHelpers.export(exports, "animate", ()=>animate);
+// Función de la carga del spinner 
 parcelHelpers.export(exports, "sppiner", ()=>sppiner);
 var _three = require("three");
 var _fbxloaderJs = require("three/examples/jsm/loaders/FBXLoader.js");
 var _rgbeloaderJs = require("three/examples/jsm/loaders/RGBELoader.js");
 var _orbitControlsJs = require("three/examples/jsm/controls/OrbitControls.js");
 var _objectsJs = require("./objects.js");
-// Configuración inicial de la escena, cámara y renderizador
-const width = document.getElementById("div_iframe").clientWidth;
-const height = document.getElementById("div_iframe").clientHeight;
 const scene = new _three.Scene();
 const textureLoader = new _three.TextureLoader();
-const camera = new _three.PerspectiveCamera(45, width / height, 1, 3000);
-// camera.position.set(-50, 50.29856636823064, 150); // Ajusta la posición de la cámara para estar más cerca del modelo
-camera.fog = new _three.Fog(0xe6e6e6, 5);
 const renderer = new _three.WebGLRenderer();
-renderer.setSize(width, height);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = _three.PCFSoftShadowMap;
-renderer.toneMapping = _three.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1;
-renderer.outputEncoding = _three.sRGBEncoding;
-const hemisphereLight = new _three.HemisphereLight(0xffffff, 0x444444);
-hemisphereLight.position.set(0, 20, 0);
-scene.add(hemisphereLight);
-const directionalLight = new _three.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(10, 20, 15);
-directionalLight.castShadow = true;
-directionalLight.shadow.mapSize.width = 1024;
-directionalLight.shadow.mapSize.height = 1024;
-directionalLight.shadow.camera.near = 0.5;
-directionalLight.shadow.camera.far = 50;
-directionalLight.shadow.camera.left = -90;
-directionalLight.shadow.camera.right = 50;
-directionalLight.shadow.camera.top = 50;
-directionalLight.shadow.camera.bottom = -50;
-scene.add(directionalLight);
-// const planeGeometry = new THREE.PlaneGeometry(1000, 1000);
-// const planeMaterial = new THREE.MeshLambertMaterial({ color: 0xe6e6e6 });
-// const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-// plane.rotation.x = -Math.PI / 2;
-// plane.position.y = -1;
-// plane.receiveShadow = true;
-// scene.add(plane);
-textureLoader.load("./assets/model/vignette.jpg", function(texture) {
-    scene.background = texture;
-});
+const width = document.getElementById("div_iframe").clientWidth;
+const height = document.getElementById("div_iframe").clientHeight;
+const camera = new _three.PerspectiveCamera(45, width / height, 1, 3000);
 const controls = new (0, _orbitControlsJs.OrbitControls)(camera, renderer.domElement);
-controls.update();
+// Hacemos referencia al div del iframe
+const $id_title_iframe = document.getElementById("title_iframe");
+// Manipulación de elementos individuales de los modelos 
 const raycaster = new _three.Raycaster();
 const mouse = new _three.Vector2();
+// Iinicializar escenas
+// Configuración inicial de la escena, cámara y renderizador
+function init() {
+    // Niebla
+    camera.fog = new _three.Fog(0xe6e6e6, 5);
+    // Configuracion de renderer 
+    renderer.setSize(width, height);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = _three.PCFSoftShadowMap;
+    renderer.toneMapping = _three.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1;
+    renderer.outputEncoding = _three.sRGBEncoding;
+    // Luz hemiferica
+    const hemisphereLight = new _three.HemisphereLight(0xffffff, 0x444444);
+    hemisphereLight.position.set(0, 300, 0);
+    scene.add(hemisphereLight);
+    // Luz dirreccional
+    const directionalLight = new _three.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(-50, 50.29856636823064, 150);
+    directionalLight.castShadow = true;
+    directionalLight.shadow.mapSize.width = 1024;
+    directionalLight.shadow.mapSize.height = 1024;
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 50;
+    directionalLight.shadow.camera.left = -90;
+    directionalLight.shadow.camera.right = 50;
+    directionalLight.shadow.camera.top = 50;
+    directionalLight.shadow.camera.bottom = -50;
+    scene.add(directionalLight);
+    // Textturas del cileo
+    textureLoader.load("./assets/model/vignette.jpg", function(texture) {
+        scene.background = texture;
+    });
+    // Control de la camara
+    controls.update();
+}
+// Button active
 function buttonActive(id) {
     document.querySelectorAll("#btn button").forEach((btn)=>btn.classList.remove("active"));
     document.getElementById(id).classList.add("active");
@@ -5859,7 +5863,6 @@ function buttonActive(id) {
 const iframesOnClick = (event)=>{
     const $div_detalis = document.getElementById("div_details");
     const $frame_container = document.getElementById("div_iframe");
-    const $id_title_iframe = document.getElementById("title_iframe");
     const dataKeyIframes = (0, _objectsJs.dataIframes)[event.target.id];
     const $iframe = document.createElement("iframe");
     $div_detalis.innerHTML = "";
@@ -5873,26 +5876,51 @@ const iframesOnClick = (event)=>{
 let loadedModel = null; // Mantener referencia al modelo cargado actualmente
 const modelos3DLoader = (nameModel, py, event)=>{
     camera.position.set(-50, 50.29856636823064, 150); // Ajusta la posición de la cámara para estar más cerca del modelo
-    const $id_title_iframe = document.getElementById("title_iframe");
     $id_title_iframe.textContent = `${event.target.innerText}`;
     return new Promise((resolve, reject)=>{
         // Eliminar el modelo cargado previamente si existe
-        if (loadedModel) {
-            scene.children.splice(2, 1);
-            console.log("Eliminado el modelo");
-        }
-        console.log(scene);
+        if (loadedModel) scene.remove(loadedModel);
+        // Llamamos la función del botón activo
         buttonActive(event.target.id);
+        // Mostrar el indicador de carga
+        const loadingManager = new _three.LoadingManager();
+        loadingManager.onStart = function(url, itemsLoaded, itemsTotal) {
+        // console.log(`Comenzando carga de archivos : ${url}. cargando  ${itemsLoaded} de ${itemsTotal} archivos.`);
+        };
+        loadingManager.onLoad = function() {
+            // console.log('carga completa!');
+            document.getElementById("loadingIndicator").style.display = "none"; // Ocultar indicador de carga
+            resolve();
+        };
+        loadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
+            const progress = itemsLoaded / itemsTotal * 100;
+            // console.log(`Cargando archivos: ${url}. Cargando ${itemsLoaded} de ${itemsTotal} archivos. ${progress}%`);
+            document.getElementById("loadingIndicator").textContent = `${Math.round(progress)}%`;
+        };
+        loadingManager.onError = function(url) {
+            // console.log(`ruta del error ${url}`);
+            document.getElementById("loadingIndicator").textContent = `Error al cargar ${url}`;
+            reject(new Error(`Error al cargar ${url}`));
+        };
         // Cargar entorno HDR
-        new (0, _rgbeloaderJs.RGBELoader)().setPath("./assets/model/").load("MR_INT-005_WhiteNeons_NAD.hdr", function(texture) {
+        new (0, _rgbeloaderJs.RGBELoader)(loadingManager).setPath("./assets/model/").load("MR_INT-005_WhiteNeons_NAD.hdr", function(texture) {
             texture.mapping = _three.EquirectangularReflectionMapping;
             scene.environment = texture;
+            // scene.background = texture;
             // Cargar modelo FBX
-            const loader = new (0, _fbxloaderJs.FBXLoader)();
+            const loader = new (0, _fbxloaderJs.FBXLoader)(loadingManager);
             loader.load(`./assets/model/${nameModel}.fbx`, function(object) {
+                console.log(object);
+                object.children.forEach((el)=>{
+                    if (el.isMesh && el.material && el.material.map) el.material.color.set(3, 3, 3); // Cambia el color a blanco
+                });
                 object.position.set(0, py, 0);
                 object.rotation.set(-Math.PI / 2, 0, Math.PI / 8);
                 object.castShadow = true;
+                console.log(object);
+                object.children.map((el)=>{
+                    if (el.name == "ID_233") console.log(el);
+                });
                 object.traverse((child)=>{
                     if (child.isMesh) {
                         child.castShadow = true;
@@ -5901,7 +5929,6 @@ const modelos3DLoader = (nameModel, py, event)=>{
                 });
                 scene.add(object);
                 loadedModel = object;
-                resolve();
             }, undefined, (error)=>{
                 reject(error);
             });
@@ -5919,16 +5946,21 @@ function sppiner() {
     const $div_loader_container = document.createElement("div");
     const $div_text = document.createElement("div");
     const $div_loader = document.createElement("div");
+    const $div_number_loader = document.createElement("div");
+    $div_number_loader.id = "loadingIndicator";
+    $div_number_loader.textContent = "0%";
     $div_loader_container.id = "loader-container";
     $div_loader.id = "loader";
     $div_text.id = "loading-text";
     $div_text.textContent = "Cargando Modelo...";
     $div_loader_container.appendChild($div_text);
     $div_loader_container.appendChild($div_loader);
+    $div_loader_container.appendChild($div_number_loader);
     const $frame_container = document.getElementById("div_iframe");
     $frame_container.innerHTML = "";
     document.getElementById("div_iframe").appendChild($div_loader_container);
 }
+// Función para el rederizado de las diferentes pantalla 
 function onContainerResize() {
     const newWidth = document.getElementById("div_iframe").clientWidth;
     const newHeight = document.getElementById("div_iframe").clientHeight;
@@ -5937,6 +5969,8 @@ function onContainerResize() {
     camera.updateProjectionMatrix();
 }
 window.addEventListener("resize", onContainerResize);
+console.log("inicio");
+init();
 
 },{"three":"ktPTu","three/examples/jsm/loaders/FBXLoader.js":"e0BdD","three/examples/jsm/loaders/RGBELoader.js":"cfP3d","three/examples/jsm/controls/OrbitControls.js":"7mqRv","./objects.js":"kXREq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ktPTu":[function(require,module,exports) {
 /**

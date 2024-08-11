@@ -1,0 +1,18 @@
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"bbox": [ 437954.625, 686422.4375, 0, 437954.625, 686422.4375, 0 ],
+		"coordinates": [ 437954.625, 686422.4375, 0 ]
+	},
+	"crs": {
+		"type": "name",
+		"properties": {
+			"name": "PROJCS[\"UTM84-18N\",GEOGCS[\"LL84\",DATUM[\"WGS84\",SPHEROID[\"WGS84\",6378137.000,298.25722356]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.017453292519943295]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"false_easting\",500000.000],PARAMETER[\"false_northing\",0.000],PARAMETER[\"central_meridian\",-75.00000000000000],PARAMETER[\"scale_factor\",0.9996],PARAMETER[\"latitude_of_origin\",0.000],UNIT[\"Meter\",1.00000000000000]]"
+		}
+	},
+	"properties": {
+		"rotation": [ 0, 0, 0 ],
+		"scaling": [ 1, 1, 1 ]
+	}
+}
